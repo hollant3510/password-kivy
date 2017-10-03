@@ -1,4 +1,5 @@
 import kivy
+import hashlib
 
 from kivy.app import App
 from kivymd.theming import ThemeManager
@@ -8,9 +9,10 @@ from kivy.uix.boxlayout import BoxLayout
 
 
 class CreatePasswordForm(BoxLayout):
-     
     def encodepass(self, o, m1, m2):
-        return (o + m1 + m2)
+        temp = o + m1 + m2
+        temp = hashlib.md5(temp.encode())
+        return (temp.hexdigest())
         
  
 
