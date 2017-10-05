@@ -9,9 +9,38 @@ from kivy.uix.boxlayout import BoxLayout
 
 
 class CreatePasswordForm(BoxLayout):
+    
+    def encodeMd5(tempor):
+        tempor = hashlib.md5(tempor.encode())
+        return tempor
+
+    def encodeSha1(tempor):
+        tempor = hashlib.sha1(tempor.encode())
+        return tempor
+
+    def encodeSha224(tempor):
+        tempor = hashlib.sha224(tempor.encode())
+        return tempor
+
+    def encodeSha256(tempor):
+        tempor = hashlib.sha256(tempor.encode())
+        return tempor
+
+    def encodeSha384(tempor):
+        tempor = hashlib.sha384(tempor.encode())
+        return tempor
+
+    def encodeSha512(tempor):
+        tempor = hashlib.sha512(tempor.encode())
+        return tempor
+
+#http://pythoncentral.io/hashing-strings-with-python/
+
     def encodepass(self, o, m1, m2):
-        temp = o + m1 + m2
-        temp = hashlib.md5(temp.encode())
+        temp = o + m1
+        temp = CreatePasswordForm.encodeMd5(temp)
+        temp = (temp.hexdigest()) + m2
+        temp = CreatePasswordForm.encodeMd5(temp)
         return (temp.hexdigest())
         
  
