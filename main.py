@@ -35,16 +35,19 @@ class CreatePasswordForm(BoxLayout):
 
 #http://pythoncentral.io/hashing-strings-with-python/
 
-    def encodepass(self, o, m1, m2):
+    def encodepass(self, o, m1):
         temp = o + m1
-        temp = CreatePasswordForm.encodeMd5(temp)
-        temp = (temp.hexdigest()) + m2
         temp = CreatePasswordForm.encodeMd5(temp)
         return (temp.hexdigest())
         
         
-    def updateText(self, o, m1, m2):
-        temp = CreatePasswordForm.encodepass(self, o, m1, m2)
+    def updateTextOne(self, input1, input2):
+        temp = CreatePasswordForm.encodepass(self, input1, input2)
+        tempor = self.ids['hashoutput']
+        tempor.text = temp
+
+    def updateTextTwo(self, input1, input2):
+        temp = CreatePasswordForm.encodepass(self, input1, input2)
         tempor = self.ids['newpassword']
         tempor.text = temp
 
