@@ -8,8 +8,7 @@ from kivymd.button import *
 from kivy.uix.boxlayout import BoxLayout
 
 
-class CreatePasswordForm(BoxLayout):
-    
+class CreatePasswordForm(BoxLayout): 
     def encodeMd5(tempor):
         tempor = hashlib.md5(tempor.encode())
         return tempor
@@ -43,7 +42,11 @@ class CreatePasswordForm(BoxLayout):
         temp = CreatePasswordForm.encodeMd5(temp)
         return (temp.hexdigest())
         
- 
+        
+    def updateText(self, o, m1, m2):
+        temp = CreatePasswordForm.encodepass(self, o, m1, m2)
+        tempor = self.ids['newpassword']
+        tempor.text = temp
 
 class PasswordApp(App):
     theme_cls = ThemeManager()
