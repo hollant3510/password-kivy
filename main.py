@@ -15,7 +15,13 @@ global hashTypeSelect2
 hashTypeSelect1 = 0
 hashTypeSelect2 = 0
 
-class CreatePasswordForm(BoxLayout): 
+class CreatePasswordForm(BoxLayout):
+    # buttonid is button id string, hashId is string
+    def updateHashButton(self, buttonID, hashID):
+        print("hello!")
+        widget = self.ids[buttonID]
+        widget.text = hashID
+
     def encodeMd5(tempor):
         tempor = hashlib.md5(tempor.encode())
         return tempor
@@ -100,7 +106,23 @@ class CreatePasswordForm(BoxLayout):
 
 class PasswordApp(App):
     theme_cls = ThemeManager()
-    menu_items = [{'viewclass': 'MDMenuItem', 'text': 'MD5', "on_press": "app.show_example_date_picker(1,1)"}]
+    hash_one_items = [
+        {'viewclass': 'MDMenuItem', 'text': 'MD5', "on_press": "app.updateHashButton('hashselector1', 'MD5')"},
+        {'viewclass': 'MDMenuItem', 'text': 'SHA1', "on_press": "app.updateHashButton('hashselector1', 'SHA1')"},
+        {'viewclass': 'MDMenuItem', 'text': 'SHA224', "on_press": "app.updateHashButton('hashselector1', 'SHA224')"},
+        {'viewclass': 'MDMenuItem', 'text': 'SHA256', "on_press": "app.updateHashButton('hashselector1', 'SHA256')"},
+        {'viewclass': 'MDMenuItem', 'text': 'SHA384', "on_press": "app.updateHashButton('hashselector1', 'SHA384')"},
+        {'viewclass': 'MDMenuItem', 'text': 'SHA512', "on_press": "app.updateHashButton('hashselector1', 'SHA512')"}
+    ]
+
+    hash_two_items = [
+        {'viewclass': 'MDMenuItem', 'text': 'MD5', "on_press": "app.updateHashButton('hashselector2', 'MD5')"},
+        {'viewclass': 'MDMenuItem', 'text': 'SHA1', "on_press": "app.updateHashButton('hashselector2', 'SHA1')"},
+        {'viewclass': 'MDMenuItem', 'text': 'SHA224', "on_press": "app.updateHashButton('hashselector2', 'SHA224')"},
+        {'viewclass': 'MDMenuItem', 'text': 'SHA256', "on_press": "app.updateHashButton('hashselector2', 'SHA256')"},
+        {'viewclass': 'MDMenuItem', 'text': 'SHA384', "on_press": "app.updateHashButton('hashselector2', 'SHA384')"},
+        {'viewclass': 'MDMenuItem', 'text': 'SHA512', "on_press": "app.updateHashButton('hashselector2', 'SHA512')"}
+    ]
 
     pass
 
