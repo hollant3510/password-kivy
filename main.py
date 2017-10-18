@@ -48,19 +48,19 @@ class CreatePasswordForm(BoxLayout):
             if (hashTypeSelect1 == 0):
                 temp = CreatePasswordForm.encodeMd5(temp)
 
-            if (hashTypeSelect1 == 1):
+            elif (hashTypeSelect1 == 1):
                 temp = CreatePasswordForm.encodeSha1(temp)
 
-            if (hashTypeSelect1 == 2):
+            elif (hashTypeSelect1 == 2):
                 temp = CreatePasswordForm.encodeSha224(temp)
 
-            if (hashTypeSelect1 == 3):
+            elif (hashTypeSelect1 == 3):
                 temp = CreatePasswordForm.encodeSha256(temp)
             
-            if (hashTypeSelect1 == 4):
+            elif (hashTypeSelect1 == 4):
                 temp = CreatePasswordForm.encodeSha384(temp)
             
-            if (hashTypeSelect1 == 5):
+            elif (hashTypeSelect1 == 5):
                 temp = CreatePasswordForm.encodeSha512(temp)
         
 
@@ -68,31 +68,30 @@ class CreatePasswordForm(BoxLayout):
             if (hashTypeSelect2 == 0):
                 temp = CreatePasswordForm.encodeMd5(temp)
 
-            if (hashTypeSelect2 == 1):
+            elif (hashTypeSelect2 == 1):
                 temp = CreatePasswordForm.encodeSha1(temp)
 
-            if (hashTypeSelect2 == 2):
+            elif (hashTypeSelect2 == 2):
                 temp = CreatePasswordForm.encodeSha224(temp)
 
-            if (hashTypeSelect2 == 3):
+            elif (hashTypeSelect2 == 3):
                 temp = CreatePasswordForm.encodeSha256(temp)
             
-            if (hashTypeSelect2 == 4):
+            elif (hashTypeSelect2 == 4):
                 temp = CreatePasswordForm.encodeSha384(temp)
             
-            if (hashTypeSelect2 == 5):
+            elif (hashTypeSelect2 == 5):
                 temp = CreatePasswordForm.encodeSha512(temp)
 
-
-        
-
-
-        return (temp.hexdigest()) 
+        return temp.hexdigest()
         
     def updateTextOne(self, input1, input2, hashTypeSelect):
         outputTextOne = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
         tempor = self.ids['hashoutput']
-        tempor.text = outputTextOne
+        if len(outputTextOne) > 15:
+            tempor.text = outputTextOne[:15] + "..."
+        else:
+            tempor.text = outputTextOne
 
     def updateTextTwo(self, input1, input2, hashTypeSelect):
         outputTextTwo = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
