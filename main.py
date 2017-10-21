@@ -9,6 +9,9 @@ from kivy.uix.boxlayout import BoxLayout
 
 global outputTextOne
 global outputTextTwo
+global outputTextThree
+global outputTextFour
+global outputTextFive
 global hashTypeSelect1
 global hashTypeSelect2
 
@@ -21,7 +24,7 @@ class CreatePasswordForm(BoxLayout):
         print("hello!")
         widget = self.ids[buttonID]
         widget.text = hashID
-
+    #different encoding methods to increase the number of possible different combinations.
     def encodeMd5(tempor):
         tempor = hashlib.md5(tempor.encode())
         return tempor
@@ -46,7 +49,7 @@ class CreatePasswordForm(BoxLayout):
         tempor = hashlib.sha512(tempor.encode())
         return tempor
 
-
+    #Takes in itself, two strings and an int used to select which hash should be used. Based on the strings and the selected hash it returns a string
     def encodepass(self, o, m1, hashTypeUsed):
         temp = o + m1
 
@@ -90,7 +93,12 @@ class CreatePasswordForm(BoxLayout):
                 temp = CreatePasswordForm.encodeSha512(temp)
 
         return temp.hexdigest()
-        
+
+
+    #Used when hashing using two layers
+
+    # Updates Text output One whenever called with the hash of input1+input2. Stores this value in outputTextOne(a global variable) and makes hashoutput field in the kv file display a shortened version to fit on the screen.
+    # Shortens to 15 characters.     
     def updateTextOne(self, input1, input2, hashTypeSelect):
         outputTextOne = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
         tempor = self.ids['hashoutput']
@@ -99,10 +107,43 @@ class CreatePasswordForm(BoxLayout):
         else:
             tempor.text = outputTextOne
 
+
+    #Updates Text output Two whenever called with the hash of input1+input2. Stores this value in outputTextTwo(a global variable) and makes newpassword field in the kv file display a shortened version(the first 20 characters)
     def updateTextTwo(self, input1, input2, hashTypeSelect):
         outputTextTwo = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
         tempor = self.ids['newpassword']
         tempor.text = outputTextTwo
+
+
+    #Used when hashing using three layers
+
+    # Updates Text output One whenever called with the hash of input1+input2. Stores this value in outputTextOne(a global variable) and makes hashoutput field in the kv file display a shortened version to fit on the screen.
+    # Shortens to 15 characters.     
+    def updateTextThree(self, input1, input2, hashTypeSelect):
+        outputTextThree = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
+        tempor = self.ids['Placeholder1']
+        if len(outputTextThree) > 15:
+            tempor.text = outputTextThree[:15] + "..."
+        else:
+            tempor.text = outputTextThree
+
+
+    # Updates Text output One whenever called with the hash of input1+input2. Stores this value in outputTextOne(a global variable) and makes hashoutput field in the kv file display a shortened version to fit on the screen.
+    # Shortens to 15 characters.     
+    def updateTextFour(self, input1, input2, hashTypeSelect):
+        outputTextFour = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
+        tempor = self.ids['Placeholder2']
+        if len(outputTextFour) > 15:
+            tempor.text = outputTextFour[:15] + "..."
+        else:
+            tempor.text = outputTextFour
+
+
+    #Updates Text output Two whenever called with the hash of input1+input2. Stores this value in outputTextTwo(a global variable) and makes newpassword field in the kv file display a shortened version(the first 20 characters)
+    def updateTextFive(self, input1, input2, hashTypeSelect):
+        outputTextFive = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
+        tempor = self.ids['Placeholder3']
+        tempor.text = outputTextFive
 
 class PasswordApp(App):
     theme_cls = ThemeManager()
