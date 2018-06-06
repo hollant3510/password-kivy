@@ -1,139 +1,149 @@
+import kivy
 import hashlib
 
 from kivy.app import App
 from kivymd.theming import ThemeManager
+from kivymd.button import MDRaisedButton
+from kivymd.button import *
 from kivy.uix.boxlayout import BoxLayout
 
-hash_type_select_one = 0
-hash_type_select_two = 0
+global outputTextOne
+global outputTextTwo
+global outputTextThree
+global outputTextFour
+global outputTextFive
+global hashTypeSelect1
+global hashTypeSelect2
 
+hashTypeSelect1 = 0
+hashTypeSelect2 = 0
 
 class CreatePasswordForm(BoxLayout):
     # buttonid is button id string, hashId is string
-    def update_hash_button(self, button_id, hash_id):
+    def updateHashButton(self, buttonID, hashID):
         print("hello!")
-        widget = self.ids[button_id]
-        widget.text = hash_id
+        widget = self.ids[buttonID]
+        widget.text = hashID
+    #different encoding methods to increase the number of possible different combinations.
+    def encodeMd5(tempor):
+        tempor = hashlib.md5(tempor.encode())
+        return tempor
 
-    # different encoding methods to increase the number of possible different combinations.
-    def encode_md5(self):
-        return hashlib.md5(self.encode())
+    def encodeSha1(tempor):
+        tempor = hashlib.sha1(tempor.encode())
+        return tempor
 
-    def encode_sha1(self):
-        return hashlib.sha1(self.encode())
+    def encodeSha224(tempor):
+        tempor = hashlib.sha224(tempor.encode())
+        return tempor
 
-    def encode_sha224(self):
-        return hashlib.sha224(self.encode())
+    def encodeSha256(tempor):
+        tempor = hashlib.sha256(tempor.encode())
+        return tempor
 
-    def encode_sha256(self):
-        return hashlib.sha256(self.encode())
+    def encodeSha384(tempor):
+        tempor = hashlib.sha384(tempor.encode())
+        return tempor
 
-    def encode_sha384(self):
-        return hashlib.sha384(self.encode())
+    def encodeSha512(tempor):
+        tempor = hashlib.sha512(tempor.encode())
+        return tempor
 
-    def encode_sha512(self):
-        return hashlib.sha512(self.encode())
-
-    # Takes in itself, two strings and an int used to select which hash should be used
-    # Based on the strings and the selected hash it returns a string
-    @staticmethod
-    def encode_pass(o, m1, hash_type_used):
+    #Takes in itself, two strings and an int used to select which hash should be used. Based on the strings and the selected hash it returns a string
+    def encodepass(self, o, m1, hashTypeUsed):
         temp = o + m1
 
-        if hash_type_used == 0:
-            if hash_type_select_one == 0:
-                temp = CreatePasswordForm.encode_md5(temp)
+        if (hashTypeUsed == 0):
+            if (hashTypeSelect1 == 0):
+                temp = CreatePasswordForm.encodeMd5(temp)
 
-            elif hash_type_select_one == 1:
-                temp = CreatePasswordForm.encode_sha1(temp)
+            elif (hashTypeSelect1 == 1):
+                temp = CreatePasswordForm.encodeSha1(temp)
 
-            elif hash_type_select_one == 2:
-                temp = CreatePasswordForm.encode_sha224(temp)
+            elif (hashTypeSelect1 == 2):
+                temp = CreatePasswordForm.encodeSha224(temp)
 
-            elif hash_type_select_one == 3:
-                temp = CreatePasswordForm.encode_sha256(temp)
+            elif (hashTypeSelect1 == 3):
+                temp = CreatePasswordForm.encodeSha256(temp)
             
-            elif hash_type_select_one == 4:
-                temp = CreatePasswordForm.encode_sha384(temp)
+            elif (hashTypeSelect1 == 4):
+                temp = CreatePasswordForm.encodeSha384(temp)
             
-            elif hash_type_select_one == 5:
-                temp = CreatePasswordForm.encode_sha512(temp)
+            elif (hashTypeSelect1 == 5):
+                temp = CreatePasswordForm.encodeSha512(temp)
+        
 
-        if hash_type_used == 1:
-            if hash_type_select_two == 0:
-                temp = CreatePasswordForm.encode_md5(temp)
+        if (hashTypeUsed == 1):
+            if (hashTypeSelect2 == 0):
+                temp = CreatePasswordForm.encodeMd5(temp)
 
-            elif hash_type_select_two == 1:
-                temp = CreatePasswordForm.encode_sha1(temp)
+            elif (hashTypeSelect2 == 1):
+                temp = CreatePasswordForm.encodeSha1(temp)
 
-            elif hash_type_select_two == 2:
-                temp = CreatePasswordForm.encode_sha224(temp)
+            elif (hashTypeSelect2 == 2):
+                temp = CreatePasswordForm.encodeSha224(temp)
 
-            elif hash_type_select_two == 3:
-                temp = CreatePasswordForm.encode_sha256(temp)
+            elif (hashTypeSelect2 == 3):
+                temp = CreatePasswordForm.encodeSha256(temp)
             
-            elif hash_type_select_two == 4:
-                temp = CreatePasswordForm.encode_sha384(temp)
+            elif (hashTypeSelect2 == 4):
+                temp = CreatePasswordForm.encodeSha384(temp)
             
-            elif hash_type_select_two == 5:
-                temp = CreatePasswordForm.encode_sha512(temp)
+            elif (hashTypeSelect2 == 5):
+                temp = CreatePasswordForm.encodeSha512(temp)
 
         return temp.hexdigest()
 
-    # Used when hashing using two layers
-    # Updates Text output One whenever called with the hash of input1+input2.
-    # Stores this value in outputTextOne(a global variable) and makes hash output
-    # field in the kv file display a shortened version to fit on the screen.
+
+    #Used when hashing using two layers
+
+    # Updates Text output One whenever called with the hash of input1+input2. Stores this value in outputTextOne(a global variable) and makes hashoutput field in the kv file display a shortened version to fit on the screen.
     # Shortens to 15 characters.     
-    def update_text_one(self, input1, input2, hash_type_select):
-        output_text_one = CreatePasswordForm.encode_pass(input1, input2, hash_type_select)
+    def updateTextOne(self, input1, input2, hashTypeSelect):
+        outputTextOne = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
         tempor = self.ids['hashoutput']
-        if len(output_text_one) > 15:
-            tempor.text = output_text_one[:15] + "..."
+        if len(outputTextOne) > 15:
+            tempor.text = outputTextOne[:15] + "..."
         else:
-            tempor.text = output_text_one
+            tempor.text = outputTextOne
 
-    # Updates Text output Two whenever called with the hash of input1+input2.
-    # Stores this value in outputTextTwo(a global variable) and makes
-    # new password field in the kv file display a shortened version(the first 20 characters)
-    def update_text_two(self, input1, input2, hash_type_select):
-        output_text_two = CreatePasswordForm.encode_pass(input1, input2, hash_type_select)
+
+    #Updates Text output Two whenever called with the hash of input1+input2. Stores this value in outputTextTwo(a global variable) and makes newpassword field in the kv file display a shortened version(the first 20 characters)
+    def updateTextTwo(self, input1, input2, hashTypeSelect):
+        outputTextTwo = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
         tempor = self.ids['newpassword']
-        tempor.text = output_text_two
+        tempor.text = outputTextTwo
 
-    # Used when hashing using three layers
-    # Updates Text output One whenever called with the hash of input1+input2.
-    # Stores this value in outputTextOne(a global variable) and makes hash output field
-    # in the kv file display a shortened version to fit on the screen.
+
+    #Used when hashing using three layers
+
+    # Updates Text output One whenever called with the hash of input1+input2. Stores this value in outputTextOne(a global variable) and makes hashoutput field in the kv file display a shortened version to fit on the screen.
     # Shortens to 15 characters.     
-    def update_text_three(self, input1, input2, hash_type_select):
-        output_text_three = CreatePasswordForm.encode_pass(input1, input2, hash_type_select)
+    def updateTextThree(self, input1, input2, hashTypeSelect):
+        outputTextThree = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
         tempor = self.ids['Placeholder1']
-        if len(output_text_three) > 15:
-            tempor.text = output_text_three[:15] + "..."
+        if len(outputTextThree) > 15:
+            tempor.text = outputTextThree[:15] + "..."
         else:
-            tempor.text = output_text_three
+            tempor.text = outputTextThree
 
-    # Updates Text output One whenever called with the hash of input1+input2.
-    # Stores this value in outputTextOne(a global variable) and makes hashoutput
-    # field in the kv file display a shortened version to fit on the screen.
+
+    # Updates Text output One whenever called with the hash of input1+input2. Stores this value in outputTextOne(a global variable) and makes hashoutput field in the kv file display a shortened version to fit on the screen.
     # Shortens to 15 characters.     
-    def update_text_four(self, input1, input2, hash_type_select):
-        output_text_four = CreatePasswordForm.encode_pass(input1, input2, hash_type_select)
+    def updateTextFour(self, input1, input2, hashTypeSelect):
+        outputTextFour = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
         tempor = self.ids['Placeholder2']
-        if len(output_text_four) > 15:
-            tempor.text = output_text_four[:15] + "..."
+        if len(outputTextFour) > 15:
+            tempor.text = outputTextFour[:15] + "..."
         else:
-            tempor.text = output_text_four
+            tempor.text = outputTextFour
 
-    # Updates Text output Two whenever called with the hash of input1+input2.
-    # Stores this value in outputTextTwo(a global variable) and makes newpassword field
-    # in the kv file display a shortened version(the first 20 characters)
-    def update_text_five(self, input1, input2, hash_type_select):
-        output_text_five = CreatePasswordForm.encode_pass(input1, input2, hash_type_select)
+
+    #Updates Text output Two whenever called with the hash of input1+input2. Stores this value in outputTextTwo(a global variable) and makes newpassword field in the kv file display a shortened version(the first 20 characters)
+    def updateTextFive(self, input1, input2, hashTypeSelect):
+        outputTextFive = CreatePasswordForm.encodepass(self, input1, input2, hashTypeSelect)
         tempor = self.ids['Placeholder3']
-        tempor.text = output_text_five
-
+        tempor.text = outputTextFive
 
 class PasswordApp(App):
     theme_cls = ThemeManager()
